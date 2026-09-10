@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>候補一覧</title>
+<style>
+:root{
+  --ink:#16202A; --sub:#5B6773; --rule:#D5DBE0; --bg:#F4F6F7; --paper:#FFFFFF;
+  --core:#0E5E6F; --bench:#5A4E9C; --edge:#8A96A1; --trend:#A0703A;
+  --go:#0E5E6F; --go-bg:#E3F0F2; --warn:#8A5300; --warn-bg:#FBF0DC;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Meiryo",sans-serif;
+  font-size:15px;line-height:1.7;font-feature-settings:"palt"}
+main{max-width:880px;margin:0 auto;padding:40px 20px 80px}
+button{font:inherit;cursor:pointer;border:1px solid var(--rule);background:var(--paper);color:var(--ink);
+  padding:8px 16px;border-radius:6px}
+button:hover{border-color:var(--sub)}
+button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--core);outline-offset:2px}
+.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+.primary:hover{background:#2A3845}
+
+#gate{max-width:360px;margin:18vh auto 0}
+#gate h1{font-size:20px;font-weight:600;margin:0 0 4px}
+#gate p{color:var(--sub);font-size:13px;margin:0 0 20px}
+#gate input{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--rule);border-radius:6px;margin-bottom:12px}
+#err{color:#A32D2D;font-size:13px;min-height:1.4em;margin:0 0 8px}
+
+#app{display:none}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;
+  border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:6px}
+.head h1{font-size:32px;font-weight:600;letter-spacing:.02em;margin:0;line-height:1.2}
+.head h1 small{display:block;font-size:14px;font-weight:400;color:var(--sub);letter-spacing:0;margin-top:6px}
+.tally{font-size:13px;color:var(--sub);margin:10px 0 22px}
+.tally b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.filters button{font-size:13px;padding:5px 12px}
+.filters button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+ul.list{list-style:none;margin:0;padding:0;background:var(--paper);border:1px solid var(--rule);border-radius:8px}
+ul.list li{border-left:4px solid var(--edge);padding:14px 18px;border-bottom:1px solid var(--rule)}
+ul.list li:last-child{border-bottom:none}
+li[data-tier="コア"]{border-left-color:var(--core)}
+li[data-tier="ベンチマーク"]{border-left-color:var(--bench)}
+li[data-tier="業界動向"]{border-left-color:var(--trend)}
+.meta{font-size:12px;color:var(--sub);margin:0}
+.meta span+span::before{content:"／";margin:0 4px;color:var(--rule)}
+.title{font-size:16px;font-weight:600;margin:2px 0 6px;line-height:1.55}
+.title a{color:inherit;text-decoration-color:var(--rule);text-underline-offset:3px}
+.tags{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px}
+.tag{padding:1px 8px;border-radius:4px;background:var(--bg);color:var(--sub)}
+.tag.go{background:var(--go-bg);color:var(--go);font-weight:600}
+.tag.warn{background:var(--warn-bg);color:var(--warn)}
+.reason{font-size:13px;color:var(--sub);margin:6px 0 0}
+details{margin-top:10px}
+summary{font-size:13px;color:var(--core);cursor:pointer}
+.draft{margin:8px 0 0;padding:12px 14px;background:var(--bg);border-radius:6px;font-size:14px}
+.draft dt{font-weight:600;font-size:13px;margin-top:8px}
+.draft dt:first-child{margin-top:0}
+.draft dd{margin:2px 0 0}
+.empty{padding:28px;text-align:center;color:var(--sub)}
+.foot{font-size:12px;color:var(--sub);margin-top:14px}
+@media (max-width:560px){.head h1{font-size:26px}}
+@media (prefers-reduced-motion:no-preference){ul.list li{transition:background .15s}}
+</style>
+</head>
+<body>
+<main>
+  <section id="gate">
+    <h1>候補一覧</h1>
+    <p>パスワードを入力すると、この端末の中だけで内容を表示します。</p>
+    <form id="gateForm">
+      <input id="pw" type="password" autocomplete="current-password" aria-label="パスワード" placeholder="パスワード">
+      <p id="err" role="alert"></p>
+      <button class="primary" type="submit" style="width:100%">表示する</button>
+    </form>
+  </section>
+
+  <section id="app" aria-live="polite">
+    <div class="head">
+      <h1 id="dateTitle"><small id="period"></small></h1>
+      <button class="primary" id="dl">Excelをダウンロード</button>
+    </div>
+    <p class="tally" id="tally"></p>
+    <div class="filters" role="group" aria-label="絞り込み">
+      <button data-f="all" aria-pressed="true">すべて</button>
+      <button data-f="report" aria-pressed="false">AI推奨が「報告」</button>
+      <button data-f="press" aria-pressed="false">報道段階</button>
+      <button data-f="core" aria-pressed="false">コアのみ</button>
+    </div>
+    <ul class="list" id="list"></ul>
+    <p class="foot">報告するかどうかは、ダウンロードしたExcelの「判断」列で選んでください。速報下書きはExcelの2枚目のシートにも入っています。</p>
+  </section>
+</main>
+
+<script src="exceljs.min.js"></script>
+<script>
+const $ = (s) => document.querySelector(s);
+const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+let DATA = null;
+
+async function decrypt(pw) {
+  const res = await fetch("data.enc.json", { cache: "no-store" });
+  if (!res.ok) throw new Error("fetch");
+  const enc = await res.json();
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveKey"]);
+  const key = await crypto.subtle.deriveKey(
+    { name: "PBKDF2", salt: b64(enc.salt), iterations: enc.iter, hash: "SHA-256" },
+    base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+  const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: b64(enc.iv) }, key, b64(enc.ct));
+  return JSON.parse(new TextDecoder().decode(plain));
+}
+
+$("#gateForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const pw = $("#pw").value;
+  if (!pw) { $("#err").textContent = "パスワードを入力してください。"; return; }
+  $("#err").textContent = "確認しています…";
+  try {
+    DATA = await decrypt(pw);
+    $("#pw").value = "";
+    $("#gate").style.display = "none";
+    $("#app").style.display = "block";
+    render("all");
+  } catch (err) {
+    $("#err").textContent = err.message === "fetch"
+      ? "データを読み込めませんでした。ページを再読み込みしてください。"
+      : "パスワードが違います。";
+  }
+});
+$("#pw").addEventListener("input", () => { $("#err").textContent = ""; });
+
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const fmtDate = (iso) => { const d = new Date(iso); return `${d.getMonth() + 1}月${d.getDate()}日`; };
+
+function render(filter) {
+  const g = new Date(DATA.generated_at);
+  const wd = "日月火水木金土"[g.getDay()];
+  $("#dateTitle").innerHTML = `${g.getMonth() + 1}月${g.getDate()}日（${wd}）の候補<small>${esc(DATA.period)}</small>`;
+  const items = DATA.items;
+  const n = (f) => items.filter(f).length;
+  $("#tally").innerHTML = `全<b>${items.length}</b>件　AI推奨「報告」<b>${n((i) => i.recommendation === "報告")}</b>件　報道段階<b>${n((i) => i.status.startsWith("報道段階"))}</b>件`;
+  const shown = items.filter((i) =>
+    filter === "report" ? i.recommendation === "報告" :
+    filter === "press" ? i.status.startsWith("報道段階") :
+    filter === "core" ? i.tier === "コア" : true);
+  $("#list").innerHTML = shown.length ? shown.map(row).join("") : `<li class="empty">この条件の候補はありません。</li>`;
+}
+
+function row(i) {
+  const statusCls = i.status.startsWith("報道段階") ? "warn" : "";
+  const recCls = i.recommendation === "報告" ? "go" : "";
+  const title = i.url ? `<a href="${esc(i.url)}" target="_blank" rel="noopener noreferrer">${esc(i.title)}</a>` : esc(i.title);
+  const d = i.draft;
+  const draft = d ? `<details><summary>速報下書きを見る</summary><dl class="draft">
+    <dt>① 要約</dt><dd>${esc(d.summary)}</dd><dt>② 斬新性</dt><dd>${esc(d.novelty)}</dd>
+    <dt>③ 学び</dt><dd>${esc(d.learning)}</dd><dt>④ 自社への導入可能性</dt><dd>${esc(d.feasibility)}</dd>
+    <dt>⑤ 取るべきアクション（案）</dt><dd>${esc(d.action)}</dd></dl></details>` : "";
+  return `<li data-tier="${esc(i.tier)}">
+    <p class="meta"><span>${esc(i.tier)}</span><span>${esc(i.company)}</span><span>${esc(i.source)}</span><span>${fmtDate(i.date)}</span></p>
+    <p class="title">${title}</p>
+    <div class="tags"><span class="tag ${recCls}">AI推奨：${esc(i.recommendation)}</span><span class="tag ${statusCls}">${esc(i.status)}</span><span class="tag">${esc(i.viewpoint)}</span></div>
+    <p class="reason">${esc(i.reason)}</p>${draft}</li>`;
+}
+
+document.querySelectorAll(".filters button").forEach((b) => b.addEventListener("click", () => {
+  document.querySelectorAll(".filters button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+  render(b.dataset.f);
+}));
+
+const JUDGE = ["報告", "保留", "除外"];
+const REASONS = ["対象外の企業", "富裕層と無関係", "既報・重複", "影響が小さい", "情報不足", "その他"];
+
+async function buildExcel() {
+  if (typeof ExcelJS === "undefined") throw new Error("lib");
+  const wb = new ExcelJS.Workbook();
+  const head = { font: { bold: true, color: { argb: "FFFFFFFF" } }, fill: { type: "pattern", pattern: "solid", fgColor: { argb: "FF16202A" } } };
+  const styleHead = (ws) => { ws.getRow(1).eachCell((c) => { c.font = head.font; c.fill = head.fill; c.alignment = { vertical: "middle" }; }); ws.views = [{ state: "frozen", ySplit: 1 }]; };
+
+  const ws = wb.addWorksheet("候補一覧");
+  ws.columns = [
+    { header: "ID", key: "id", width: 13 }, { header: "日付", key: "date", width: 11 },
+    { header: "区分", key: "tier", width: 11 }, { header: "社名", key: "company", width: 20 },
+    { header: "見出し", key: "title", width: 48 }, { header: "媒体", key: "source", width: 18 },
+    { header: "確認状況", key: "status", width: 20 }, { header: "観点", key: "viewpoint", width: 18 },
+    { header: "AI推奨", key: "recommendation", width: 10 }, { header: "推奨理由", key: "reason", width: 36 },
+    { header: "斬新性", key: "novelty", width: 8 }, { header: "自社影響", key: "impact", width: 9 },
+    { header: "判断", key: "judge", width: 9 }, { header: "除外理由", key: "why", width: 16 },
+    { header: "メモ", key: "memo", width: 30 }, { header: "URL", key: "url", width: 40 },
+  ];
+  DATA.items.forEach((i) => {
+    const r = ws.addRow({ ...i, judge: "", why: "", memo: "", url: i.url || "" });
+    if (i.url) r.getCell("url").value = { text: i.url, hyperlink: i.url };
+    r.alignment = { vertical: "top", wrapText: true };
+  });
+  styleHead(ws);
+  ws.autoFilter = { from: "A1", to: "P1" };
+  const last = Math.max(DATA.items.length + 1, 200);
+  for (let r = 2; r <= last; r++) {
+    ws.getCell(`M${r}`).dataValidation = { type: "list", allowBlank: true, formulae: [`"${JUDGE.join(",")}"`] };
+    ws.getCell(`N${r}`).dataValidation = { type: "list", allowBlank: true, formulae: [`"${REASONS.join(",")}"`] };
+  }
+  ["M", "N"].forEach((c) => { ws.getColumn(c).fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FFFBF0DC" } }; });
+  ws.getRow(1).eachCell((c) => { c.fill = head.fill; });
+
+  const wd = wb.addWorksheet("速報下書き");
+  wd.columns = [
+    { header: "ID", key: "id", width: 13 }, { header: "社名", key: "company", width: 18 }, { header: "見出し", key: "title", width: 36 },
+    { header: "① 要約", key: "summary", width: 48 }, { header: "② 斬新性", key: "novelty", width: 36 },
+    { header: "③ 学び", key: "learning", width: 48 }, { header: "④ 自社への導入可能性", key: "feasibility", width: 40 },
+    { header: "⑤ 取るべきアクション（案）", key: "action", width: 48 },
+  ];
+  DATA.items.filter((i) => i.draft).forEach((i) => {
+    wd.addRow({ id: i.id, company: i.company, title: i.title, ...i.draft }).alignment = { vertical: "top", wrapText: true };
+  });
+  styleHead(wd);
+
+  const wm = wb.addWorksheet("見逃し記録");
+  wm.columns = [
+    { header: "記録日", key: "a", width: 11 }, { header: "社名", key: "b", width: 18 }, { header: "見出し", key: "c", width: 48 },
+    { header: "URL", key: "d", width: 40 }, { header: "どこで気づいたか", key: "e", width: 24 }, { header: "メモ", key: "f", width: 30 },
+  ];
+  styleHead(wm);
+
+  const buf = await wb.xlsx.writeBuffer();
+  const g = new Date(DATA.generated_at);
+  const name = `競合ウォッチ_${g.getFullYear()}${String(g.getMonth() + 1).padStart(2, "0")}${String(g.getDate()).padStart(2, "0")}.xlsx`;
+  const url = URL.createObjectURL(new Blob([buf], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }));
+  const a = Object.assign(document.createElement("a"), { href: url, download: name });
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+$("#dl").addEventListener("click", async () => {
+  const btn = $("#dl"), label = btn.textContent;
+  btn.textContent = "作成しています…";
+  try { await buildExcel(); btn.textContent = "ダウンロードしました"; }
+  catch (e) { btn.textContent = e.message === "lib" ? "Excel部品を読み込めませんでした" : "作成できませんでした"; }
+  setTimeout(() => { btn.textContent = label; }, 2500);
+});
+</script>
+</body>
+</html>

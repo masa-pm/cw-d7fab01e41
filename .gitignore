@@ -1,0 +1,7 @@
+# このフォルダ（公開用リポジトリ）には、下の許可したファイル以外を載せない
+*
+!.gitignore
+!index.html
+!exceljs.min.js
+!exceljs.LICENSE.txt
+!data.enc.json
