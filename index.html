@@ -155,7 +155,7 @@ function row(i) {
   const recCls = i.recommendation === "報告" ? "go" : "";
   const title = i.url ? `<a href="${esc(i.url)}" target="_blank" rel="noopener noreferrer">${esc(i.title)}</a>` : esc(i.title);
   const d = i.draft;
-  const draft = d ? `<details><summary>速報下書きを見る</summary><dl class="draft">
+  const draft = d ? `<details><summary>5観点分析を見る</summary><dl class="draft">
     <dt>① 要約</dt><dd>${esc(d.summary)}</dd><dt>② 斬新性</dt><dd>${esc(d.novelty)}</dd>
     <dt>③ 学び</dt><dd>${esc(d.learning)}</dd><dt>④ 自社への導入可能性</dt><dd>${esc(d.feasibility)}</dd>
     <dt>⑤ 取るべきアクション（案）</dt><dd>${esc(d.action)}</dd></dl></details>` : "";
