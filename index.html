@@ -8,18 +8,22 @@
 <style>
 :root{
   --ink:#16202A; --sub:#5B6773; --rule:#D5DBE0; --bg:#F4F6F7; --paper:#FFFFFF;
-  --core:#0E5E6F; --bench:#5A4E9C; --edge:#8A96A1; --trend:#A0703A;
+  --core:#0E5E6F; --core-bg:#E3F0F2;
+  --bench:#5A4E9C; --bench-bg:#EAE7F6;
+  --periph:#5B6773; --periph-bg:#E9EBED;
+  --trend:#9C5B1E; --trend-bg:#F5E7D6;
   --go:#0E5E6F; --go-bg:#E3F0F2; --warn:#8A5300; --warn-bg:#FBF0DC;
+  --shadow:0 1px 2px rgba(22,32,42,.05), 0 4px 14px rgba(22,32,42,.04);
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);
   font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Meiryo",sans-serif;
   font-size:15px;line-height:1.7;font-feature-settings:"palt"}
-main{max-width:880px;margin:0 auto;padding:40px 20px 80px}
+main{max-width:920px;margin:0 auto;padding:40px 20px 80px}
 button{font:inherit;cursor:pointer;border:1px solid var(--rule);background:var(--paper);color:var(--ink);
-  padding:8px 16px;border-radius:6px}
+  padding:8px 16px;border-radius:7px;transition:border-color .12s,background .12s}
 button:hover{border-color:var(--sub)}
-button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--core);outline-offset:2px}
+button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--core);outline-offset:2px}
 .primary{background:var(--ink);color:#fff;border-color:var(--ink)}
 .primary:hover{background:#2A3845}
 
@@ -34,37 +38,62 @@ button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid
   border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:6px}
 .head h1{font-size:32px;font-weight:600;letter-spacing:.02em;margin:0;line-height:1.2}
 .head h1 small{display:block;font-size:14px;font-weight:400;color:var(--sub);letter-spacing:0;margin-top:6px}
-.tally{font-size:13px;color:var(--sub);margin:10px 0 22px}
+.tally{font-size:13px;color:var(--sub);margin:10px 0 18px}
 .tally b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
-.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-.filters button{font-size:13px;padding:5px 12px}
-.filters button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
 
-ul.list{list-style:none;margin:0;padding:0;background:var(--paper);border:1px solid var(--rule);border-radius:8px}
-ul.list li{border-left:4px solid var(--edge);padding:14px 18px;border-bottom:1px solid var(--rule)}
-ul.list li:last-child{border-bottom:none}
+.toolbar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 12px;margin-bottom:4px;
+  border-bottom:1px solid var(--rule)}
+.search{display:flex;gap:8px;margin-bottom:10px}
+.search input{flex:1;font:inherit;padding:9px 12px;border:1px solid var(--rule);border-radius:7px;background:var(--paper)}
+.search button{white-space:nowrap;font-size:13px;color:var(--sub)}
+.filters{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.filters button{font-size:13px;padding:5px 12px;display:inline-flex;align-items:center;gap:6px}
+.filters button .dot{width:8px;height:8px;border-radius:50%;background:var(--edge,var(--sub));flex:none}
+.filters button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.filters button[aria-pressed="true"] .dot{background:#fff}
+.selects{display:flex;gap:8px;flex-wrap:wrap}
+.selects select{font:inherit;font-size:13px;padding:6px 10px;border:1px solid var(--rule);border-radius:7px;
+  background:var(--paper);color:var(--ink)}
+.result-count{font-size:12px;color:var(--sub);margin:10px 2px 12px}
+.result-count button{font-size:12px;padding:2px 9px;margin-left:6px;color:var(--sub)}
+
+ul.list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+ul.list li{background:var(--paper);border:1px solid var(--rule);border-radius:9px;
+  border-left:4px solid var(--edge);padding:15px 18px;box-shadow:var(--shadow)}
 ul.list li[data-tier="コア"]{border-left-color:var(--core)}
 ul.list li[data-tier="ベンチマーク"]{border-left-color:var(--bench)}
+ul.list li[data-tier="周辺"]{border-left-color:var(--periph)}
 ul.list li[data-tier="業界動向"]{border-left-color:var(--trend)}
-.meta{font-size:12px;color:var(--sub);margin:0}
+.meta{font-size:12px;color:var(--sub);margin:0;display:flex;flex-wrap:wrap;gap:0}
 .meta span+span::before{content:"／";margin:0 4px;color:var(--rule)}
-.title{font-size:16px;font-weight:600;margin:2px 0 6px;line-height:1.55}
+.title{font-size:16px;font-weight:600;margin:4px 0 8px;line-height:1.55}
 .title a{color:inherit;text-decoration-color:var(--rule);text-underline-offset:3px}
 .tags{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px}
-.tag{padding:1px 8px;border-radius:4px;background:var(--bg);color:var(--sub)}
+.tag{padding:2px 9px;border-radius:5px;background:var(--bg);color:var(--sub);font-weight:500}
+.tag.tier-コア{background:var(--core-bg);color:var(--core);font-weight:600}
+.tag.tier-ベンチマーク{background:var(--bench-bg);color:var(--bench);font-weight:600}
+.tag.tier-周辺{background:var(--periph-bg);color:var(--periph);font-weight:600}
+.tag.tier-業界動向{background:var(--trend-bg);color:var(--trend);font-weight:600}
 .tag.go{background:var(--go-bg);color:var(--go);font-weight:600}
 .tag.warn{background:var(--warn-bg);color:var(--warn)}
-.reason{font-size:13px;color:var(--sub);margin:6px 0 0}
+.reason{font-size:13px;color:var(--sub);margin:8px 0 0}
 details{margin-top:10px}
 summary{font-size:13px;color:var(--core);cursor:pointer}
 .draft{margin:8px 0 0;padding:12px 14px;background:var(--bg);border-radius:6px;font-size:14px}
 .draft dt{font-weight:600;font-size:13px;margin-top:8px}
 .draft dt:first-child{margin-top:0}
 .draft dd{margin:2px 0 0}
-.empty{padding:28px;text-align:center;color:var(--sub)}
-.foot{font-size:12px;color:var(--sub);margin-top:14px}
-@media (max-width:560px){.head h1{font-size:26px}}
-@media (prefers-reduced-motion:no-preference){ul.list li{transition:background .15s}}
+.empty{padding:36px 20px;text-align:center;color:var(--sub);background:var(--paper);
+  border:1px solid var(--rule);border-radius:9px}
+.empty button{margin-top:10px;font-size:13px}
+.foot{font-size:12px;color:var(--sub);margin-top:16px}
+mark{background:#FBEFC0;color:inherit;border-radius:2px;padding:0 1px}
+@media (max-width:560px){
+  .head h1{font-size:26px}
+  .toolbar{top:0}
+  .search{flex-direction:column}
+}
+@media (prefers-reduced-motion:no-preference){ul.list li{transition:box-shadow .15s,border-color .15s}}
 </style>
 </head>
 <body>
@@ -85,12 +114,26 @@ summary{font-size:13px;color:var(--core);cursor:pointer}
       <button class="primary" id="dl">Excelをダウンロード</button>
     </div>
     <p class="tally" id="tally"></p>
-    <div class="filters" role="group" aria-label="絞り込み">
-      <button data-f="all" aria-pressed="true">すべて</button>
-      <button data-f="report" aria-pressed="false">AI推奨が「報告」</button>
-      <button data-f="press" aria-pressed="false">報道段階</button>
-      <button data-f="core" aria-pressed="false">コアのみ</button>
+
+    <div class="toolbar">
+      <div class="search">
+        <input id="q" type="search" placeholder="社名・見出し・理由で検索" aria-label="検索">
+      </div>
+      <div class="filters" id="tierFilters" role="group" aria-label="区分で絞り込み"></div>
+      <div class="selects">
+        <select id="fRec" aria-label="AI推奨で絞り込み"><option value="all">AI推奨：すべて</option></select>
+        <select id="fStatus" aria-label="確認状況で絞り込み"><option value="all">確認状況：すべて</option></select>
+        <select id="fCompany" aria-label="企業で絞り込み"><option value="all">企業：すべて</option></select>
+        <select id="sort" aria-label="並べ替え">
+          <option value="date_desc">日付が新しい順</option>
+          <option value="date_asc">日付が古い順</option>
+          <option value="impact">自社への影響が大きい順</option>
+          <option value="novelty">斬新性が高い順</option>
+        </select>
+      </div>
     </div>
+    <p class="result-count" id="resultCount"></p>
+
     <ul class="list" id="list"></ul>
     <p class="foot">報告するかどうかは、ダウンロードしたExcelの「判断」列で選んでください。速報下書きはExcelの2枚目のシートにも入っています。</p>
   </section>
@@ -101,6 +144,12 @@ summary{font-size:13px;color:var(--core);cursor:pointer}
 const $ = (s) => document.querySelector(s);
 const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
 let DATA = null;
+const TIER_ORDER = ["コア", "ベンチマーク", "周辺", "業界動向"];
+const STATUS_ORDER = ["公式発表あり", "報道段階（本文確認済）", "報道段階（見出しのみ）"];
+const REC_ORDER = ["報告", "記録のみ", "参考", "除外推奨"];
+const NOVELTY_RANK = { "◎": 3, "○": 2, "△": 1 };
+const IMPACT_RANK = { "大": 3, "中": 2, "小": 1 };
+const state = { q: "", tier: "all", rec: "all", status: "all", company: "all", sort: "date_desc" };
 
 async function decrypt(pw) {
   const res = await fetch("data.enc.json", { cache: "no-store" });
@@ -124,7 +173,7 @@ $("#gateForm").addEventListener("submit", async (e) => {
     $("#pw").value = "";
     $("#gate").style.display = "none";
     $("#app").style.display = "block";
-    render("all");
+    init();
   } catch (err) {
     $("#err").textContent = err.message === "fetch"
       ? "データを読み込めませんでした。ページを再読み込みしてください。"
@@ -135,41 +184,127 @@ $("#pw").addEventListener("input", () => { $("#err").textContent = ""; });
 
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const fmtDate = (iso) => { const d = new Date(iso); return `${d.getMonth() + 1}月${d.getDate()}日`; };
+const escRe = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+function highlight(text, q) {
+  const s = esc(text);
+  if (!q) return s;
+  return s.replace(new RegExp(`(${escRe(esc(q))})`, "ig"), "<mark>$1</mark>");
+}
 
-function render(filter) {
+function uniqueSorted(items, key, order) {
+  const present = new Set(items.map((i) => i[key]).filter(Boolean));
+  const ordered = order.filter((v) => present.has(v));
+  const rest = [...present].filter((v) => !order.includes(v)).sort((a, b) => a.localeCompare(b, "ja"));
+  return [...ordered, ...rest];
+}
+
+function init() {
+  const items = DATA.items;
+
+  // 区分チップ（すべて＋実際に存在する区分のみ）
+  const tiers = uniqueSorted(items, "tier", TIER_ORDER);
+  const tierWrap = $("#tierFilters");
+  tierWrap.innerHTML = [`<button data-tier="all" aria-pressed="true">すべて</button>`]
+    .concat(tiers.map((t) => `<button data-tier="${esc(t)}" aria-pressed="false"><span class="dot" style="background:var(--${tierVar(t)})"></span>${esc(t)}</button>`))
+    .join("");
+  tierWrap.querySelectorAll("button").forEach((b) => b.addEventListener("click", () => {
+    tierWrap.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    state.tier = b.dataset.tier;
+    render();
+  }));
+
+  fillSelect("#fRec", uniqueSorted(items, "recommendation", REC_ORDER), "AI推奨：すべて");
+  fillSelect("#fStatus", uniqueSorted(items, "status", STATUS_ORDER), "確認状況：すべて");
+  fillSelect("#fCompany", uniqueSorted(items, "company", []), "企業：すべて");
+
+  $("#fRec").addEventListener("change", (e) => { state.rec = e.target.value; render(); });
+  $("#fStatus").addEventListener("change", (e) => { state.status = e.target.value; render(); });
+  $("#fCompany").addEventListener("change", (e) => { state.company = e.target.value; render(); });
+  $("#sort").addEventListener("change", (e) => { state.sort = e.target.value; render(); });
+  $("#q").addEventListener("input", (e) => { state.q = e.target.value.trim(); render(); });
+
+  render();
+}
+
+function tierVar(t) {
+  return t === "コア" ? "core" : t === "ベンチマーク" ? "bench" : t === "業界動向" ? "trend" : "periph";
+}
+
+function fillSelect(sel, values, allLabel) {
+  const el = $(sel);
+  el.innerHTML = [`<option value="all">${allLabel}</option>`]
+    .concat(values.map((v) => `<option value="${esc(v)}">${esc(v)}</option>`)).join("");
+}
+
+function sortItems(items) {
+  const arr = [...items];
+  if (state.sort === "date_asc") arr.sort((a, b) => new Date(a.date) - new Date(b.date));
+  else if (state.sort === "impact") arr.sort((a, b) => (IMPACT_RANK[b.impact] || 0) - (IMPACT_RANK[a.impact] || 0));
+  else if (state.sort === "novelty") arr.sort((a, b) => (NOVELTY_RANK[b.novelty] || 0) - (NOVELTY_RANK[a.novelty] || 0));
+  else arr.sort((a, b) => new Date(b.date) - new Date(a.date));
+  return arr;
+}
+
+function matches(i) {
+  if (state.tier !== "all" && i.tier !== state.tier) return false;
+  if (state.rec !== "all" && i.recommendation !== state.rec) return false;
+  if (state.status !== "all" && i.status !== state.status) return false;
+  if (state.company !== "all" && i.company !== state.company) return false;
+  if (state.q) {
+    const hay = `${i.company} ${i.title} ${i.reason} ${i.viewpoint}`.toLowerCase();
+    if (!hay.includes(state.q.toLowerCase())) return false;
+  }
+  return true;
+}
+
+function render() {
   const g = new Date(DATA.generated_at);
   const wd = "日月火水木金土"[g.getDay()];
   $("#dateTitle").innerHTML = `${g.getMonth() + 1}月${g.getDate()}日（${wd}）の候補<small>${esc(DATA.period)}</small>`;
   const items = DATA.items;
   const n = (f) => items.filter(f).length;
   $("#tally").innerHTML = `全<b>${items.length}</b>件　AI推奨「報告」<b>${n((i) => i.recommendation === "報告")}</b>件　報道段階<b>${n((i) => i.status.startsWith("報道段階"))}</b>件`;
-  const shown = items.filter((i) =>
-    filter === "report" ? i.recommendation === "報告" :
-    filter === "press" ? i.status.startsWith("報道段階") :
-    filter === "core" ? i.tier === "コア" : true);
-  $("#list").innerHTML = shown.length ? shown.map(row).join("") : `<li class="empty">この条件の候補はありません。</li>`;
+
+  const shown = sortItems(items.filter(matches));
+  const filtered = shown.length !== items.length;
+  $("#resultCount").innerHTML = filtered
+    ? `絞り込み中：<b>${shown.length}</b>件（全${items.length}件中）<button id="resetBtn" type="button">条件をリセット</button>`
+    : `全${items.length}件を表示中`;
+  const resetBtn = $("#resetBtn");
+  if (resetBtn) resetBtn.addEventListener("click", resetFilters);
+
+  $("#list").innerHTML = shown.length ? shown.map(row).join("") : `
+    <li class="empty">この条件に一致する候補はありません。<br>
+    <button type="button" id="resetBtn2">条件をリセット</button></li>`;
+  const resetBtn2 = $("#resetBtn2");
+  if (resetBtn2) resetBtn2.addEventListener("click", resetFilters);
+}
+
+function resetFilters() {
+  state.q = ""; state.tier = "all"; state.rec = "all"; state.status = "all"; state.company = "all";
+  $("#q").value = "";
+  $("#fRec").value = "all"; $("#fStatus").value = "all"; $("#fCompany").value = "all";
+  $("#tierFilters").querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.tier === "all")));
+  render();
 }
 
 function row(i) {
   const statusCls = i.status.startsWith("報道段階") ? "warn" : "";
   const recCls = i.recommendation === "報告" ? "go" : "";
-  const title = i.url ? `<a href="${esc(i.url)}" target="_blank" rel="noopener noreferrer">${esc(i.title)}</a>` : esc(i.title);
+  const q = state.q;
+  const titleHtml = highlight(i.title, q);
+  const title = i.url ? `<a href="${esc(i.url)}" target="_blank" rel="noopener noreferrer">${titleHtml}</a>` : titleHtml;
   const d = i.draft;
   const draft = d ? `<details><summary>5観点分析を見る</summary><dl class="draft">
     <dt>① 要約</dt><dd>${esc(d.summary)}</dd><dt>② 斬新性</dt><dd>${esc(d.novelty)}</dd>
     <dt>③ 学び</dt><dd>${esc(d.learning)}</dd><dt>④ 自社への導入可能性</dt><dd>${esc(d.feasibility)}</dd>
     <dt>⑤ 取るべきアクション（案）</dt><dd>${esc(d.action)}</dd></dl></details>` : "";
   return `<li data-tier="${esc(i.tier)}">
-    <p class="meta"><span>${esc(i.tier)}</span><span>${esc(i.company)}</span><span>${esc(i.source)}</span><span>${fmtDate(i.date)}</span></p>
+    <p class="meta"><span>${highlight(i.company, q)}</span><span>${esc(i.source)}</span><span>${fmtDate(i.date)}</span></p>
     <p class="title">${title}</p>
-    <div class="tags"><span class="tag ${recCls}">AI推奨：${esc(i.recommendation)}</span><span class="tag ${statusCls}">${esc(i.status)}</span><span class="tag">${esc(i.viewpoint)}</span></div>
-    <p class="reason">${esc(i.reason)}</p>${draft}</li>`;
+    <div class="tags"><span class="tag tier-${esc(i.tier)}">${esc(i.tier)}</span><span class="tag ${recCls}">AI推奨：${esc(i.recommendation)}</span><span class="tag ${statusCls}">${esc(i.status)}</span><span class="tag">${esc(i.viewpoint)}</span></div>
+    <p class="reason">${highlight(i.reason, q)}</p>${draft}</li>`;
 }
-
-document.querySelectorAll(".filters button").forEach((b) => b.addEventListener("click", () => {
-  document.querySelectorAll(".filters button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
-  render(b.dataset.f);
-}));
 
 const JUDGE = ["報告", "保留", "除外"];
 const REASONS = ["対象外の企業", "富裕層と無関係", "既報・重複", "影響が小さい", "情報不足", "その他"];
