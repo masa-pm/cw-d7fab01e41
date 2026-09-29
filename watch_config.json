@@ -1,0 +1,372 @@
+{
+  "generated_at": "2026-09-29T18:24:15.356166+09:00",
+  "sections": [
+    {
+      "tier": "コア",
+      "companies": [
+        {
+          "category": "国内メガ系",
+          "name": "三菱UFJフィナンシャル・グループ",
+          "media": [
+            {
+              "label": "銀行リリース",
+              "url": "https://www.bk.mufg.jp/news/index.html"
+            },
+            {
+              "label": "信託リリース",
+              "url": "https://www.tr.mufg.jp/ippan/release/"
+            },
+            {
+              "label": "持株会社リリース",
+              "url": "https://www.mufg.jp/pressrelease/index.html"
+            },
+            {
+              "label": "DXサイト（INNOVATION HUB）",
+              "url": "https://www.mufg.jp/profile/strategy/dx/index.html"
+            },
+            {
+              "label": "CVC（MUFGイノベーション・パートナーズ）",
+              "url": "https://www.ip.mufg.jp/ja/"
+            }
+          ]
+        },
+        {
+          "category": "国内メガ系",
+          "name": "三井住友フィナンシャルグループ",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.smfg.co.jp/news/ （SMBC日興・SMBC信託の発表も掲載）"
+            },
+            {
+              "label": "DXサイト（DX-link）",
+              "url": "https://www.smfg.co.jp/dx_link/article/index.html"
+            }
+          ]
+        },
+        {
+          "category": "国内メガ系",
+          "name": "みずほフィナンシャルグループ",
+          "media": [
+            {
+              "label": "銀行リリース",
+              "url": "https://www.mizuhobank.co.jp/release/ （証券・信託は未確認）"
+            },
+            {
+              "label": "DXブランドサイト（MIZUHO DX）",
+              "url": "https://www.mizuho-fg.co.jp/dx/index.html （現存要確認）"
+            },
+            {
+              "label": "採用広報note",
+              "url": "https://note.com/mizuho_rbc_hr"
+            }
+          ]
+        },
+        {
+          "category": "大手証券",
+          "name": "野村ホールディングス",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.nomuraholdings.com/jp/news/nr.html"
+            }
+          ]
+        },
+        {
+          "category": "大手証券",
+          "name": "大和証券グループ本社",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.daiwa-grp.jp/press/"
+            },
+            {
+              "label": "大和総研 事例紹介",
+              "url": "https://www.dir.co.jp/business/case/index.html"
+            }
+          ]
+        },
+        {
+          "category": "信託銀行系",
+          "name": "三井住友トラスト・グループ",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.smtb.jp/corporate/release/"
+            }
+          ]
+        },
+        {
+          "category": "外資系PB日本拠点",
+          "name": "UBS（日本拠点・関連会社を含む）",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.ubs.com/jp/ja/about/ubsnews.html"
+            }
+          ]
+        },
+        {
+          "category": "外資系PB日本拠点",
+          "name": "JPモルガン（日本のプライベートバンク部門）",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.jpmorgan.co.jp/ja/japan-announcement （PB特化ページは未確認）"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tier": "ベンチマーク",
+      "companies": [
+        {
+          "category": "欧米大手",
+          "name": "UBS（グローバル）",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.ubs.com/global/en/media.html"
+            }
+          ]
+        },
+        {
+          "category": "欧米大手",
+          "name": "Morgan Stanley Wealth Management",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://morganstanley.com/press-releases/"
+            }
+          ]
+        },
+        {
+          "category": "欧米大手",
+          "name": "J.P. Morgan（Wealth Management / Private Bank）",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.jpmorgan.com/about-us/corporate-news"
+            }
+          ]
+        },
+        {
+          "category": "欧米大手",
+          "name": "Bank of America（Merrill / Private Bank）",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://newsroom.bankofamerica.com/content/newsroom/press-releases.html?category=lobs%2Fprivate-bank"
+            }
+          ]
+        },
+        {
+          "category": "欧米大手",
+          "name": "Citi Wealth（Citi Private Bank）",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.privatebank.citibank.com/press-releases"
+            }
+          ]
+        },
+        {
+          "category": "欧米大手",
+          "name": "Julius Baer",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.juliusbaer.com/en/media-investors/news/portal/"
+            }
+          ]
+        },
+        {
+          "category": "欧米大手",
+          "name": "Standard Chartered Private Bank",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.sc.com/en/press-release/ （グループ全体。PB特化ページは未確認）"
+            }
+          ]
+        },
+        {
+          "category": "欧米大手",
+          "name": "Deutsche Bank Wealth Management / Private Bank",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://wealth.db.com/en/about-us/news.html"
+            }
+          ]
+        },
+        {
+          "category": "欧米大手",
+          "name": "Goldman Sachs Private Wealth Management",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.goldmansachs.com/pressroom （グループ全体。PWM特化ページは未確認）"
+            }
+          ]
+        },
+        {
+          "category": "欧米大手",
+          "name": "BNP Paribas Wealth Management",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://group.bnpparibas/en/all-news/press-release （グループ全体。WM特化ページは未確認）"
+            }
+          ]
+        },
+        {
+          "category": "欧米大手",
+          "name": "Northern Trust Wealth Management",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.northerntrust.com/united-states/about-us/media-resources"
+            }
+          ]
+        },
+        {
+          "category": "欧米大手",
+          "name": "Charles Schwab",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://aboutschwab.com/press-releases"
+            }
+          ]
+        },
+        {
+          "category": "アジア大手PB",
+          "name": "DBS",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://dbs.com/newsroom/"
+            }
+          ]
+        },
+        {
+          "category": "アジア大手PB",
+          "name": "OCBC（Bank of Singapore）",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.ocbc.com/group/media/release/index.page"
+            }
+          ]
+        },
+        {
+          "category": "アジア大手PB",
+          "name": "HSBC（アジアのウェルス部門）",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.asia.privatebanking.hsbc.com.hk/about-us/media-releases-and-news/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tier": "周辺",
+      "companies": [
+        {
+          "category": "ネット系",
+          "name": "SBI証券",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "search.sbisec.co.jp の irpress 配下"
+            }
+          ]
+        },
+        {
+          "category": "ネット系",
+          "name": "楽天証券",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.rakuten-sec.co.jp/web/company/newsrelease/"
+            }
+          ]
+        },
+        {
+          "category": "ネット系",
+          "name": "マネックス証券",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://info.monex.co.jp/press/index.html"
+            }
+          ]
+        },
+        {
+          "category": "ロボアド",
+          "name": "ウェルスナビ（2025/3/4付で東証マザーズ上場廃止）",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://corp.wealthnavi.com/news/release/list"
+            }
+          ]
+        },
+        {
+          "category": "大手行",
+          "name": "りそなホールディングス",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.resona-gr.co.jp/holdings/news/"
+            }
+          ]
+        },
+        {
+          "category": "大手地銀",
+          "name": "ふくおかフィナンシャルグループ",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.fukuoka-fg.com/news_info/"
+            }
+          ]
+        },
+        {
+          "category": "大手地銀",
+          "name": "横浜フィナンシャルグループ（旧コンコルディア・フィナンシャルグループ、2025/10/1改称）",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.yokohamafg.co.jp/news/all/index.html"
+            }
+          ]
+        },
+        {
+          "category": "大手地銀",
+          "name": "めぶきフィナンシャルグループ",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.mebuki-fg.co.jp/news/"
+            }
+          ]
+        },
+        {
+          "category": "大手地銀",
+          "name": "千葉銀行（2026/3/25付で千葉興業銀行との経営統合を発表・2027/4/1予定）",
+          "media": [
+            {
+              "label": "本体リリース",
+              "url": "https://www.chibabank.co.jp/investor"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
