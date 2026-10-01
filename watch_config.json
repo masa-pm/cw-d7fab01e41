@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-01T08:08:56.001702+09:00",
+  "generated_at": "2026-10-02T07:23:36.971835+09:00",
   "sections": [
     {
       "tier": "コア",
@@ -36,7 +36,7 @@
           "media": [
             {
               "label": "本体リリース",
-              "url": "https://www.smfg.co.jp/news/ （SMBC日興・SMBC信託の発表も掲載）"
+              "url": "https://www.smfg.co.jp/news/ "
             },
             {
               "label": "DXサイト（DX-link）",
@@ -50,11 +50,11 @@
           "media": [
             {
               "label": "銀行リリース",
-              "url": "https://www.mizuhobank.co.jp/release/ （証券・信託は未確認）"
+              "url": "https://www.mizuhobank.co.jp/release/ "
             },
             {
               "label": "DXブランドサイト（MIZUHO DX）",
-              "url": "https://www.mizuho-fg.co.jp/dx/index.html （現存要確認）"
+              "url": "https://www.mizuho-fg.co.jp/dx/index.html"
             },
             {
               "label": "採用広報note",
@@ -112,7 +112,7 @@
           "media": [
             {
               "label": "本体リリース",
-              "url": "https://www.jpmorgan.co.jp/ja/japan-announcement （PB特化ページは未確認）"
+              "url": "https://www.jpmorgan.co.jp/ja/japan-announcement "
             }
           ]
         }
@@ -187,7 +187,7 @@
           "media": [
             {
               "label": "本体リリース",
-              "url": "https://www.sc.com/en/press-release/ （グループ全体。PB特化ページは未確認）"
+              "url": "https://www.sc.com/en/press-release/ "
             }
           ]
         },
@@ -207,7 +207,7 @@
           "media": [
             {
               "label": "本体リリース",
-              "url": "https://www.goldmansachs.com/pressroom （グループ全体。PWM特化ページは未確認）"
+              "url": "https://www.goldmansachs.com/pressroom "
             }
           ]
         },
@@ -217,7 +217,7 @@
           "media": [
             {
               "label": "本体リリース",
-              "url": "https://group.bnpparibas/en/all-news/press-release （グループ全体。WM特化ページは未確認）"
+              "url": "https://group.bnpparibas/en/all-news/press-release"
             }
           ]
         },
@@ -282,7 +282,7 @@
           "media": [
             {
               "label": "本体リリース",
-              "url": "search.sbisec.co.jp の irpress 配下"
+              "url": "search.sbisec.co.jp"
             }
           ]
         },
