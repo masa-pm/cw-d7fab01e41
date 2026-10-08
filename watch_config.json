@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-08T08:23:34.820875+09:00",
+  "generated_at": "2026-10-09T08:16:45.037365+09:00",
   "sections": [
     {
       "tier": "コア",
@@ -36,7 +36,7 @@
           "media": [
             {
               "label": "本体リリース",
-              "url": "https://www.smfg.co.jp/news/ "
+              "url": "https://www.smfg.co.jp/news/"
             },
             {
               "label": "DXサイト（DX-link）",
@@ -50,7 +50,7 @@
           "media": [
             {
               "label": "銀行リリース",
-              "url": "https://www.mizuhobank.co.jp/release/ "
+              "url": "https://www.mizuhobank.co.jp/release/"
             },
             {
               "label": "DXブランドサイト（MIZUHO DX）",
@@ -112,7 +112,7 @@
           "media": [
             {
               "label": "本体リリース",
-              "url": "https://www.jpmorgan.co.jp/ja/japan-announcement "
+              "url": "https://www.jpmorgan.co.jp/ja/japan-announcement"
             }
           ]
         }
@@ -187,7 +187,7 @@
           "media": [
             {
               "label": "本体リリース",
-              "url": "https://www.sc.com/en/press-release/ "
+              "url": "https://www.sc.com/en/press-release/"
             }
           ]
         },
@@ -207,7 +207,7 @@
           "media": [
             {
               "label": "本体リリース",
-              "url": "https://www.goldmansachs.com/pressroom "
+              "url": "https://www.goldmansachs.com/pressroom"
             }
           ]
         },
